@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shriver Family Weekly Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --navy: #1E3A5F;
+    --navy2: #2E5788;
+    --bg: #EFF2F6;
+    --card: #FFFFFF;
+    --border: #E4E8EE;
+    --ink: #22303F;
+    --muted: #7C8798;
+
+    --emma: #C2447A;
+    --emma-bg: #FBEAF1;
+    --liam: #1D7A8C;
+    --liam-bg: #E4F4F6;
+    --nicole: #8A5FBF;
+    --nicole-bg: #F1EBFA;
+    --family: #4C8C5C;
+    --family-bg: #E9F4EB;
+
+    --dinner-cook: #4C8C5C;
+    --dinner-takeout: #C97A2B;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(46,87,136,0.08), transparent 45%),
+      var(--bg);
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    padding:32px 16px 56px;
+  }
+
+  .wrap{max-width:780px;margin:0 auto;}
+
+  header{margin-bottom:22px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12.5px;font-weight:600;color:var(--navy2);
+    background:#E4ECF6;padding:4px 12px;border-radius:999px;margin-bottom:10px;
+  }
+  header h1{
+    font-family:'Outfit',sans-serif;font-size:30px;font-weight:800;
+    margin:0 0 6px;color:var(--navy);letter-spacing:-0.3px;
+  }
+  header .dates{font-size:14.5px;color:var(--muted);font-weight:500;}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 20px;}
+  .legend span{
+    display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;
+    padding:5px 12px 5px 9px;border-radius:999px;box-shadow:0 1px 2px rgba(20,30,50,0.04);
+  }
+  .legend .dot{width:8px;height:8px;border-radius:50%;}
+  .legend .emma{background:var(--emma-bg);color:var(--emma);}
+  .legend .emma .dot{background:var(--emma);}
+  .legend .liam{background:var(--liam-bg);color:var(--liam);}
+  .legend .liam .dot{background:var(--liam);}
+  .legend .nicole{background:var(--nicole-bg);color:var(--nicole);}
+  .legend .nicole .dot{background:var(--nicole);}
+  .legend .family{background:var(--family-bg);color:var(--family);}
+  .legend .family .dot{background:var(--family);}
+
+  .day{
+    display:flex;background:var(--card);border:1px solid var(--border);
+    border-radius:14px;overflow:hidden;margin-bottom:14px;
+    box-shadow:0 2px 8px rgba(24,40,64,0.05);
+  }
+  .day.weekend{background:linear-gradient(180deg,#FBFCFE,#FFFFFF);}
+
+  .date-block{
+    background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;
+    min-width:84px;padding:16px 8px;text-align:center;
+    display:flex;flex-direction:column;justify-content:center;flex-shrink:0;
+  }
+  .date-block .dow{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.5px;opacity:0.85;}
+  .date-block .num{font-family:'Outfit',sans-serif;font-size:28px;font-weight:700;line-height:1.2;}
+  .date-block .mon{font-size:11px;opacity:0.75;}
+
+  .day-body{
+    flex:1;padding:16px 18px;overflow:hidden;
+  }
+  .day-body::after{content:"";display:table;clear:both;}
+  .day-body > div{float:left;box-sizing:border-box;padding-right:18px;}
+  .day-body > div:last-child{padding-right:0;}
+  .day-body.cols-2 > div{width:50%;}
+  .day-body.cols-3 > div{width:33.333%;}
+
+  .col-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.3px;margin-bottom:8px;}
+
+  .event-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+  .event-row:last-child{margin-bottom:0;}
+  .icon{font-size:14px;line-height:1.4;flex-shrink:0;}
+  .tag{flex-shrink:0;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;margin-top:1px;white-space:nowrap;}
+  .tag.emma{background:var(--emma-bg);color:var(--emma);}
+  .tag.liam{background:var(--liam-bg);color:var(--liam);}
+  .tag.nicole{background:var(--nicole-bg);color:var(--nicole);}
+  .tag.family{background:var(--family-bg);color:var(--family);}
+
+  .event-text{font-size:13.5px;line-height:1.45;}
+  .event-text .time{color:var(--muted);font-size:12.5px;font-weight:500;}
+  .warn{font-size:11px;color:#B4571F;margin-top:2px;margin-left:22px;font-weight:600;}
+
+  .lunch-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;}
+  .lunch-item:last-child{margin-bottom:0;}
+  .lunch-item .icon{font-size:14px;}
+  .lunch-item .kid{font-size:12.5px;font-weight:700;margin-right:4px;}
+  .lunch-item .kid.emma{color:var(--emma);}
+  .lunch-item .kid.liam{color:var(--liam);}
+  .lunch-item .desc{font-size:13px;}
+  .lunch-item .desc .buy{color:var(--dinner-takeout);font-weight:600;}
+
+  .dinner{display:flex;align-items:flex-start;gap:10px;background:#FAFBFD;border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+  .dinner .icon{font-size:18px;margin-top:1px;}
+  .dinner-text .name{font-size:14px;font-weight:600;}
+  .dinner-text .note{font-size:12px;color:var(--muted);margin-top:1px;}
+
+  footer{margin-top:22px;font-size:11.5px;color:var(--muted);text-align:center;}
+
+  @media (max-width:520px){
+    .day{flex-direction:column;}
+    .date-block{flex-direction:row;justify-content:flex-start;gap:8px;min-width:0;padding:10px 16px;}
+    .date-block .num{font-size:20px;}
+    .day-body > div{float:none;width:100% !important;padding-right:0;margin-bottom:14px;}
+    .day-body > div:last-child{margin-bottom:0;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">🏡 Weekly Family Plan</div>
+    <h1>Shriver Family</h1>
+    <div class="dates">September 20 – September 26, 2026</div>
+  </header>
+
+  <div class="legend">
+    <span class="emma"><span class="dot"></span>Emma</span>
+    <span class="liam"><span class="dot"></span>Liam</span>
+    <span class="nicole"><span class="dot"></span>Nicole</span>
+    <span class="family"><span class="dot"></span>Family / Shared</span>
+  </div>
+
+  <!-- SUNDAY -->
+  <div class="day weekend">
+    <div class="date-block"><div class="dow">SUN</div><div class="num">20</div><div class="mon">Sep</div></div>
+    <div class="day-body cols-2">
+      <div>
+        <div class="col-label">EVENTS</div>
+        <div class="event-row"><span class="icon">🥍</span><span class="tag emma">EMMA</span><div class="event-text"><span class="time">9:00–11:00am</span> Lacrosse practice, Germantown Academy</div></div>
+      </div>
+      <div>
+        <div class="col-label">DINNER</div>
+        <div class="dinner cook"><span class="icon">🍗</span><div class="dinner-text"><div class="name">Chicken cutlets &amp; mashed potatoes</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONDAY -->
+  <div class="day">
+    <div class="date-block"><div class="dow">MON</div><div class="num">21</div><div class="mon">Sep</div></div>
+    <div class="day-body cols-2">
+      <div>
+        <div class="col-label">EVENTS</div>
+        <div class="event-row"><span class="icon">🏫</span><span class="tag family">FAM</span><div class="event-text">No School (district-wide)</div></div>
+        <div class="event-row"><span class="icon">⚽</span><span class="tag emma">EMMA</span><div class="event-text"><span class="time">7:00–8:30pm</span> Soccer practice</div></div>
+      </div>
+      <div>
+        <div class="col-label">DINNER</div>
+        <div class="dinner cook"><span class="icon">🥩</span><div class="dinner-text"><div class="name">Steak</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUESDAY -->
+  <div class="day">
+    <div class="date-block"><div class="dow">TUE</div><div class="num">22</div><div class="mon">Sep</div></div>
+    <div class="day-body cols-3">
+      <div>
+        <div class="col-label">EVENTS</div>
+        <div class="event-row"><span class="icon">🩺</span><span class="tag nicole">NICOLE</span><div class="event-text"><span class="time">7:30am–8:00pm</span> Work</div></div>
+        <div class="event-row"><span class="icon">⛪</span><span class="tag emma">EMMA</span><span class="tag liam">LIAM</span><div class="event-text"><span class="time">4:35–5:40pm</span> PREP</div></div>
+        <div class="event-row"><span class="icon">🥍</span><span class="tag emma">EMMA</span><div class="event-text"><span class="time">5:30–7:00pm</span> Lacrosse training</div></div>
+        <div class="warn">⚠ 10-min overlap with PREP</div>
+      </div>
+      <div>
+        <div class="col-label">LUNCH</div>
+        <div class="lunch-item"><span class="icon">🌮</span><span class="kid liam">Liam</span><span class="desc"><span class="buy">Buying</span> — tacos</span></div>
+        <div class="lunch-item"><span class="icon">🍝</span><span class="kid emma">Emma</span><span class="desc"><span class="buy">Buying</span> — pasta</span></div>
+      </div>
+      <div>
+        <div class="col-label">DINNER</div>
+        <div class="dinner cook"><span class="icon">🥙</span><div class="dinner-text"><div class="name">Split night</div><div class="note">Emma: sandwich in the car · Mark &amp; Liam: wraps at home</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEDNESDAY -->
+  <div class="day">
+    <div class="date-block"><div class="dow">WED</div><div class="num">23</div><div class="mon">Sep</div></div>
+    <div class="day-body cols-3">
+      <div>
+        <div class="col-label">EVENTS</div>
+        <div class="event-row"><span class="icon">🩺</span><span class="tag nicole">NICOLE</span><div class="event-text">Clinical — full day, then a work dinner that evening</div></div>
+        <div class="event-row"><span class="icon">🦷</span><span class="tag emma">EMMA</span><div class="event-text"><span class="time">3:00pm</span> Orthodontist appointment</div></div>
+        <div class="event-row"><span class="icon">⚽</span><span class="tag liam">LIAM</span><div class="event-text"><span class="time">5:30–6:30pm</span> Soccer practice</div></div>
+        <div class="event-row"><span class="icon">⚽</span><span class="tag emma">EMMA</span><div class="event-text"><span class="time">7:00–8:30pm</span> Soccer practice</div></div>
+      </div>
+      <div>
+        <div class="col-label">LUNCH</div>
+        <div class="lunch-item"><span class="icon">🍕</span><span class="kid liam">Liam</span><span class="desc"><span class="buy">Buying</span> — pizza</span></div>
+        <div class="lunch-item"><span class="icon">🥗</span><span class="kid emma">Emma</span><span class="desc">Packing — salad</span></div>
+      </div>
+      <div>
+        <div class="col-label">DINNER</div>
+        <div class="dinner takeout"><span class="icon">🌯</span><div class="dinner-text"><div class="name">Chipotle</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THURSDAY -->
+  <div class="day">
+    <div class="date-block"><div class="dow">THU</div><div class="num">24</div><div class="mon">Sep</div></div>
+    <div class="day-body cols-3">
+      <div>
+        <div class="col-label">EVENTS</div>
+        <div class="event-row"><span class="icon">🩺</span><span class="tag nicole">NICOLE</span><div class="event-text"><span class="time">7:30am–8:00pm</span> Work</div></div>
+        <div class="event-row"><span class="icon">🏈</span><span class="tag liam">LIAM</span><div class="event-text"><span class="time">6:00–7:00pm</span> Football practice</div></div>
+        <div class="event-row"><span class="icon">🏫</span><span class="tag nicole">NICOLE</span><div class="event-text"><span class="time">7:00pm</span> KV HSA meeting</div></div>
+      </div>
+      <div>
+        <div class="col-label">LUNCH</div>
+        <div class="lunch-item"><span class="icon">🥪</span><span class="kid liam">Liam</span><span class="desc">Packing — turkey &amp; cheese</span></div>
+        <div class="lunch-item"><span class="icon">🌯</span><span class="kid emma">Emma</span><span class="desc"><span class="buy">Buying</span> — chicken snack wraps</span></div>
+      </div>
+      <div>
+        <div class="col-label">DINNER</div>
+        <div class="dinner cook"><span class="icon">🍝</span><div class="dinner-text"><div class="name">Spaghetti &amp; meatballs</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRIDAY -->
+  <div class="day">
+    <div class="date-block"><div class="dow">FRI</div><div class="num">25</div><div class="mon">Sep</div></div>
+    <div class="day-body cols-3">
+      <div>
+        <div class="col-label">EVENTS</div>
+        <div class="event-row"><span class="icon">🏥</span><span class="tag nicole">NICOLE</span><div class="event-text"><span class="time">8:00am–4:00pm</span> Sim lab teaching, Villanova</div></div>
+        <div class="event-row"><span class="icon">🎉</span><span class="tag family">FAM</span><div class="event-text"><span class="time">6:30–8:30pm</span> Simmons Family Dance &amp; Sensory Night</div></div>
+        <div class="event-row"><span class="icon">🎶</span><span class="tag emma">EMMA</span><div class="event-text"><span class="time">7:00pm</span> KV Back to School Dance</div></div>
+      </div>
+      <div>
+        <div class="col-label">LUNCH</div>
+        <div class="lunch-item"><span class="icon">🥪</span><span class="kid liam">Liam</span><span class="desc">Packing — turkey &amp; cheese</span></div>
+        <div class="lunch-item"><span class="icon">🥜</span><span class="kid emma">Emma</span><span class="desc">Packing — PB swirl</span></div>
+      </div>
+      <div>
+        <div class="col-label">DINNER</div>
+        <div class="dinner cook"><span class="icon">🍕</span><div class="dinner-text"><div class="name">Pizza</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SATURDAY -->
+  <div class="day weekend">
+    <div class="date-block"><div class="dow">SAT</div><div class="num">26</div><div class="mon">Sep</div></div>
+    <div class="day-body cols-2">
+      <div>
+        <div class="col-label">EVENTS</div>
+        <div class="event-row"><span class="icon">⚽</span><span class="tag emma">EMMA</span><div class="event-text"><span class="time">12:30–1:30pm</span> Soccer game vs Bethlehem SC (Allentown)</div></div>
+        <div class="event-row"><span class="icon">⚽</span><span class="tag liam">LIAM</span><div class="event-text"><span class="time">1:00–2:00pm</span> Soccer game vs Team 407, Mondauk</div></div>
+        <div class="event-row"><span class="icon">🏈</span><span class="tag liam">LIAM</span><div class="event-text"><span class="time">3:00–4:00pm</span> Football game vs Bucs (home)</div></div>
+        <div class="event-row"><span class="icon">⚽</span><span class="tag family">FAM</span><div class="event-text">Union game — evening</div></div>
+      </div>
+      <div>
+        <div class="col-label">DINNER</div>
+        <div class="dinner takeout"><span class="icon">🍽️</span><div class="dinner-text"><div class="name">Dinner at the Union game</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Generated for the Shriver family · Week of Sep 20–26, 2026</footer>
+
+</div>
+</body>
+</html>
